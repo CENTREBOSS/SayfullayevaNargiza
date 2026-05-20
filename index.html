@@ -1,426 +1,613 @@
-<!doctype html>
-<html lang="uz" class="h-full">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sayfullaeva Nargiza - Portfolio</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Source+Sans+3:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
-  <style>
-/* Kod ochiq qoldirdim sizlar ham foydalaning */
-.liquid-bg {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: 0;
-  overflow: hidden;
-  background: #fff;
-}
-.liquid-bg .blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.45;
-  animation: float 12s ease-in-out infinite;
-}
-.blob-1 { width: 500px; height: 500px; background: #dc2626; top: -10%; left: -10%; animation-delay: 0s; }
-.blob-2 { width: 400px; height: 400px; background: #fca5a5; top: 50%; right: -8%; animation-delay: -4s; animation-duration: 15s; }
-.blob-3 { width: 350px; height: 350px; background: #ef4444; bottom: -5%; left: 30%; animation-delay: -8s; animation-duration: 18s; }
-.blob-4 { width: 300px; height: 300px; background: #fee2e2; top: 20%; left: 50%; animation-delay: -2s; animation-duration: 20s; }
-.blob-5 { width: 250px; height: 250px; background: #dc2626; top: 60%; left: 10%; animation-delay: -6s; animation-duration: 14s; }
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nargiza Sayfullayeva — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  25% { transform: translate(60px, -40px) scale(1.1) rotate(5deg); }
-  50% { transform: translate(-30px, 50px) scale(0.95) rotate(-3deg); }
-  75% { transform: translate(40px, 20px) scale(1.05) rotate(4deg); }
-}
+  :root {
+    --teal: #0d9488;
+    --teal-light: #5eead4;
+    --ocean: #0f4c75;
+    --foam: #e0f7f4;
+    --sand: #fdf6ec;
+    --dark: #0a1628;
+    --mid: #1e3a5f;
+    --white: #ffffff;
+    --accent: #f59e0b;
+  }
 
+  html { scroll-behavior: smooth; }
 
-.liquid-card {
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(20px);
-  border: 1.5px solid rgba(220,38,38,0.15);
-  transition: all 0.4s cubic-bezier(.4,0,.2,1);
-}
-.liquid-card:hover {
-  border-color: rgba(220,38,38,0.4);
-  box-shadow: 0 20px 60px rgba(220,38,38,0.12);
-  transform: translateY(-3px);
-}
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: none;
+  }
 
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--teal-light);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    border: 1px solid rgba(94,234,212,0.4);
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, width 0.4s, height 0.4s;
+  }
 
-.liquid-divider {
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #dc2626, #fca5a5, #dc2626, transparent);
-  border-radius: 2px;
-  animation: shimmer 3s ease-in-out infinite;
-}
-@keyframes shimmer {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
+  /* SVG liquid blobs background */
+  .liquid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .liquid-bg svg {
+    position: absolute;
+    opacity: 0.12;
+  }
+  .blob1 { top: -10%; left: -10%; width: 60vw; animation: morphBlob1 14s ease-in-out infinite; }
+  .blob2 { bottom: -15%; right: -10%; width: 55vw; animation: morphBlob2 18s ease-in-out infinite; }
+  .blob3 { top: 35%; left: 30%; width: 40vw; animation: morphBlob3 22s ease-in-out infinite; }
 
+  @keyframes morphBlob1 {
+    0%,100% { d: path("M421,308Q394,366,338,393Q282,420,220,410Q158,400,107,356Q56,312,44,248Q32,184,76,131Q120,78,182,58Q244,38,305,64Q366,90,410,145Q454,200,421,258Q388,316,421,308Z"); transform: scale(1); }
+    33% { transform: scale(1.05) translateX(20px) translateY(-15px); }
+    66% { transform: scale(0.95) translateX(-10px) translateY(20px); }
+  }
+  @keyframes morphBlob2 {
+    0%,100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(15deg) translateX(-20px); }
+  }
+  @keyframes morphBlob3 {
+    0%,100% { transform: scale(1) translateY(0); opacity: 0.08; }
+    50% { transform: scale(1.15) translateY(-30px); opacity: 0.14; }
+  }
 
-.nav-liquid {
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(220,38,38,0.1);
-}
-.nav-link {
-  position: relative;
-  color: #991b1b;
-  font-weight: 600;
-  transition: color 0.3s;
-}
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px; left: 0;
-  width: 0; height: 2px;
-  background: #dc2626;
-  border-radius: 1px;
-  transition: width 0.3s;
-}
-.nav-link:hover::after, .nav-link.active::after { width: 100%; }
+  /* Ripple on click */
+  .ripple {
+    position: fixed;
+    border-radius: 50%;
+    border: 2px solid var(--teal-light);
+    pointer-events: none;
+    z-index: 9997;
+    animation: rippleOut 0.8s ease-out forwards;
+  }
+  @keyframes rippleOut {
+    0% { width: 0; height: 0; opacity: 0.8; transform: translate(-50%,-50%); }
+    100% { width: 120px; height: 120px; opacity: 0; transform: translate(-50%,-50%); }
+  }
 
+  /* ======== NAV ======== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 50px;
+    backdrop-filter: blur(12px);
+    background: rgba(10,22,40,0.6);
+    border-bottom: 1px solid rgba(94,234,212,0.1);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--teal-light);
+    letter-spacing: 2px;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 35px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: rgba(255,255,255,0.65);
+    font-size: 0.88rem; letter-spacing: 1.5px; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--teal-light); }
 
-.section-anim { animation: fadeUp 0.8s ease-out both; }
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+  /* ======== HERO ======== */
+  #hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; text-align: center;
+    padding: 120px 40px 80px;
+  }
+  .hero-subtitle {
+    font-size: 0.8rem; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--teal-light); margin-bottom: 24px;
+    animation: fadeUp 1s 0.2s both;
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.05;
+    color: var(--white);
+    animation: fadeUp 1s 0.4s both;
+  }
+  .hero-name span {
+    display: block;
+    font-style: italic;
+    background: linear-gradient(135deg, var(--teal-light), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-tagline {
+    margin-top: 28px; font-size: 1.05rem; color: rgba(255,255,255,0.5);
+    max-width: 480px; line-height: 1.7;
+    animation: fadeUp 1s 0.6s both;
+  }
+  .hero-cta {
+    margin-top: 48px;
+    display: inline-block; text-decoration: none;
+    padding: 14px 40px; border-radius: 100px;
+    background: linear-gradient(135deg, var(--teal), var(--ocean));
+    color: var(--white); font-size: 0.9rem; letter-spacing: 1px;
+    box-shadow: 0 0 30px rgba(13,148,136,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: fadeUp 1s 0.8s both;
+  }
+  .hero-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 50px rgba(13,148,136,0.6);
+  }
+  .scroll-indicator {
+    position: absolute; bottom: 36px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.3); font-size: 0.7rem; letter-spacing: 2px;
+    animation: fadeUp 1s 1.2s both;
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--teal-light), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
+  /* ======== SECTIONS ======== */
+  section {
+    position: relative; z-index: 1;
+    padding: 100px 40px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--teal-light); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--white); margin-bottom: 60px;
+    position: relative;
+  }
+  .section-title::after {
+    content: '';
+    display: block; margin-top: 16px;
+    width: 60px; height: 2px;
+    background: linear-gradient(to right, var(--teal-light), transparent);
+  }
 
-.timeline-item { position: relative; padding-left: 28px; }
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 8px;
-  width: 12px; height: 12px;
-  background: #dc2626;
-  border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(220,38,38,0.2);
-}
-.timeline-item::after {
-  content: '';
-  position: absolute;
-  left: 5px; top: 24px;
-  width: 2px;
-  height: calc(100% - 16px);
-  background: linear-gradient(to bottom, #fca5a5, transparent);
-}
-.timeline-item:last-child::after { display: none; }
+  /* DIVIDER WAVE */
+  .wave-divider {
+    position: relative; z-index: 1;
+    width: 100%; overflow: hidden; line-height: 0;
+  }
+  .wave-divider svg { display: block; }
 
+  /* ======== ABOUT ======== */
+  #about { background: rgba(255,255,255,0.02); border-radius: 32px; margin-bottom: 40px; }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+  }
+  .about-card {
+    background: rgba(13,148,136,0.07);
+    border: 1px solid rgba(94,234,212,0.15);
+    border-radius: 20px; padding: 36px;
+    backdrop-filter: blur(6px);
+    transition: transform 0.4s, border-color 0.4s;
+  }
+  .about-card:hover { transform: translateY(-6px); border-color: rgba(94,234,212,0.4); }
+  .about-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--teal-light); margin-bottom: 16px;
+  }
+  .about-card p, .about-card li {
+    color: rgba(255,255,255,0.6); font-size: 0.92rem; line-height: 1.8;
+  }
+  .info-row { display: flex; gap: 12px; margin-bottom: 10px; align-items: flex-start; }
+  .info-label {
+    font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--accent); min-width: 100px; margin-top: 2px;
+  }
+  .info-val { color: rgba(255,255,255,0.75); font-size: 0.92rem; }
 
-.family-table { border-collapse: separate; border-spacing: 0; }
-.family-table th {
-  background: rgba(220,38,38,0.9);
-  color: #fff;
-  font-weight: 600;
-  padding: 10px 14px;
-  font-size: 13px;
-  text-align: left;
-  white-space: nowrap;
-}
-.family-table th:first-child { border-radius: 10px 0 0 0; }
-.family-table th:last-child { border-radius: 0 10px 0 0; }
-.family-table td {
-  padding: 10px 14px;
-  font-size: 13px;
-  border-bottom: 1px solid rgba(220,38,38,0.08);
-  color: #4a1a1a;
-}
-.family-table tr:hover td { background: rgba(220,38,38,0.04); }
+  /* ======== TIMELINE ======== */
+  #experience { max-width: 1100px; }
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px;
+    background: linear-gradient(to bottom, var(--teal-light), var(--ocean), transparent);
+  }
+  .tl-item {
+    position: relative; margin-bottom: 48px;
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .tl-item.visible { opacity: 1; transform: translateX(0); }
+  .tl-dot {
+    position: absolute; left: -38px; top: 6px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--teal); border: 3px solid var(--teal-light);
+    box-shadow: 0 0 14px rgba(13,148,136,0.6);
+  }
+  .tl-date {
+    font-size: 0.75rem; letter-spacing: 2px; color: var(--teal-light);
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .tl-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; color: var(--white); margin-bottom: 6px;
+  }
+  .tl-desc { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
 
+  /* ======== SKILLS ======== */
+  #skills { background: rgba(15,76,117,0.1); border-radius: 32px; }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;
+  }
+  .skill-pill {
+    background: rgba(13,148,136,0.12);
+    border: 1px solid rgba(94,234,212,0.2);
+    border-radius: 100px; padding: 14px 24px;
+    text-align: center; font-size: 0.88rem;
+    color: rgba(255,255,255,0.75);
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .skill-pill:hover {
+    background: rgba(13,148,136,0.3);
+    border-color: var(--teal-light);
+    color: var(--white);
+    transform: scale(1.06);
+    box-shadow: 0 0 20px rgba(94,234,212,0.2);
+  }
 
-.phone-pulse {
-  animation: pulse-ring 2s ease-out infinite;
-}
-@keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); }
-  70% { box-shadow: 0 0 0 15px rgba(220,38,38,0); }
-  100% { box-shadow: 0 0 0 0 rgba(220,38,38,0); }
-}
+  /* ======== CONTACT ======== */
+  #contact { text-align: center; }
+  .contact-liquid {
+    display: inline-flex; flex-direction: column; gap: 20px;
+    background: rgba(13,148,136,0.07);
+    border: 1px solid rgba(94,234,212,0.2);
+    border-radius: 28px; padding: 56px 80px;
+    backdrop-filter: blur(10px);
+    position: relative; overflow: hidden;
+  }
+  .contact-liquid::before {
+    content: '';
+    position: absolute; inset: -2px;
+    background: linear-gradient(135deg, var(--teal), transparent, var(--ocean));
+    border-radius: 28px; z-index: -1; opacity: 0.3;
+  }
+  .contact-row {
+    display: flex; align-items: center; gap: 16px;
+    color: rgba(255,255,255,0.7); font-size: 0.95rem;
+  }
+  .contact-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(13,148,136,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .contact-row a { color: var(--teal-light); text-decoration: none; }
+  .contact-row a:hover { text-decoration: underline; }
 
+  /* ======== FOOTER ======== */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center; padding: 40px;
+    border-top: 1px solid rgba(94,234,212,0.08);
+    color: rgba(255,255,255,0.25); font-size: 0.8rem; letter-spacing: 1px;
+  }
 
-html { scroll-behavior: smooth; }
+  /* Liquid wave between sections */
+  .section-wave {
+    position: relative; z-index: 1;
+    height: 80px; overflow: hidden;
+  }
+  .section-wave svg { position: absolute; bottom: 0; width: 200%; animation: waveMove 8s linear infinite; }
+  .section-wave svg:nth-child(2) { animation-delay: -4s; opacity: 0.5; }
+  @keyframes waveMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
 
-
-.liquid-section { position: relative; z-index: 1; }
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 24px; }
+    .contact-liquid { padding: 40px 30px; }
+    nav .nav-links { display: none; }
+  }
 </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full w-full overflow-auto" style="font-family: 'Source Sans 3', sans-serif; color: #3b1111;"><!-- Liquid Background -->
-  <div class="liquid-bg" aria-hidden="true">
-   <div class="blob blob-1"></div>
-   <div class="blob blob-2"></div>
-   <div class="blob blob-3"></div>
-   <div class="blob blob-4"></div>
-   <div class="blob blob-5"></div>
-  </div><!-- Navigation -->
-  <nav class="nav-liquid fixed top-0 left-0 w-full z-50 px-6 py-3 flex items-center justify-between"><span style="font-family:'Playfair Display',serif; font-weight:700; color:#991b1b; font-size:20px;">N<span style="color:#dc2626">.</span>S</span>
-   <div class="flex gap-6 text-sm"><a href="#about" class="nav-link">Ma'lumot</a> <a href="#career" class="nav-link">Karyera</a> <a href="#family" class="nav-link">Oila</a> <a href="#contact" class="nav-link">Aloqa</a>
-   </div>
-  </nav><!-- HERO -->
-  <header id="hero" class="liquid-section w-full flex items-center justify-center pt-28 pb-16 px-6" style="min-height:60%;">
-   <div class="text-center section-anim">
-    <div class="w-28 h-28 mx-auto rounded-full bg-gradient-to-br from-red-600 to-red-400 flex items-center justify-center text-white text-4xl shadow-lg mb-6" style="font-family:'Playfair Display',serif; font-weight:700;">
-     NS
-    </div>
-    <h1 id="el-name" class="text-4xl md:text-5xl font-bold mb-3" style="font-family:'Playfair Display',serif; color:#7f1d1d;">Sayfullaeva Nargiza Bohodirovna</h1>
-    <p id="el-title" class="text-lg md:text-xl font-light" style="color:#991b1b;">Moliya mutaxassisi · Kotiba</p>
-    <div class="liquid-divider w-48 mx-auto mt-6"></div>
-   </div>
-  </header><!-- ABOUT -->
-  <section id="about" class="liquid-section w-full px-6 pb-12">
-   <div class="max-w-3xl mx-auto liquid-card rounded-2xl p-8 section-anim">
-    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2" style="font-family:'Playfair Display',serif; color:#991b1b;"><i data-lucide="user" style="width:22px;height:22px;color:#dc2626;"></i> Shaxsiy Ma'lumotlar</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-     <div class="flex items-start gap-3">
-      <i data-lucide="calendar" style="width:16px;height:16px;color:#dc2626;margin-top:2px;"></i>
-      <div>
-       <span class="font-semibold block" style="color:#991b1b;">Tug'ilgan sana</span>24.04.1989
-      </div>
-     </div>
-     <div class="flex items-start gap-3">
-      <i data-lucide="map-pin" style="width:16px;height:16px;color:#dc2626;margin-top:2px;"></i>
-      <div>
-       <span class="font-semibold block" style="color:#991b1b;">Tug'ilgan joy</span>Toshkent viloyati, Yangiyol tumani
-      </div>
-     </div>
-     <div class="flex items-start gap-3">
-      <i data-lucide="flag" style="width:16px;height:16px;color:#dc2626;margin-top:2px;"></i>
-      <div>
-       <span class="font-semibold block" style="color:#991b1b;">Millati</span>O'zbek
-      </div>
-     </div>
-     <div class="flex items-start gap-3">
-      <i data-lucide="award" style="width:16px;height:16px;color:#dc2626;margin-top:2px;"></i>
-      <div>
-       <span class="font-semibold block" style="color:#991b1b;">Ma'lumoti</span>O'rta maxsus
-      </div>
-     </div>
-     <div class="flex items-start gap-3">
-      <i data-lucide="book-open" style="width:16px;height:16px;color:#dc2626;margin-top:2px;"></i>
-      <div>
-       <span class="font-semibold block" style="color:#991b1b;">Tamomlagan</span>Yangiyol Shahar Xizmat ko'rsatish kolleji, 2008
-      </div>
-     </div>
-     <div class="flex items-start gap-3">
-      <i data-lucide="briefcase" style="width:16px;height:16px;color:#dc2626;margin-top:2px;"></i>
-      <div>
-       <span class="font-semibold block" style="color:#991b1b;">Mutaxassislik</span>Moliya
-      </div>
-     </div>
-     <div class="flex items-start gap-3">
-      <i data-lucide="globe" style="width:16px;height:16px;color:#dc2626;margin-top:2px;"></i>
-      <div>
-       <span class="font-semibold block" style="color:#991b1b;">Chet tili</span>Rus tili
-      </div>
-     </div>
-     <div class="flex items-start gap-3">
-      <i data-lucide="users" style="width:16px;height:16px;color:#dc2626;margin-top:2px;"></i>
-      <div>
-       <span class="font-semibold block" style="color:#991b1b;">Partiyaviylik</span>Yo'q
-      </div>
-     </div>
-    </div>
-   </div>
-  </section><!-- CAREER -->
-  <section id="career" class="liquid-section w-full px-6 pb-12">
-   <div class="max-w-3xl mx-auto liquid-card rounded-2xl p-8 section-anim">
-    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2" style="font-family:'Playfair Display',serif; color:#991b1b;"><i data-lucide="trending-up" style="width:22px;height:22px;color:#dc2626;"></i> Mehnat Faoliyati</h2>
-    <div class="space-y-6">
-     <div class="timeline-item">
-      <p class="font-bold text-sm" style="color:#dc2626;">2013 – 2014</p>
-      <p class="font-semibold">Yuqori Chirchiq tumani 6-MTM</p>
-      <p class="text-sm opacity-80">Xo'jalik ishlari bo'yicha mudira o'rinbosari</p>
-     </div>
-     <div class="timeline-item">
-      <p class="font-bold text-sm" style="color:#dc2626;">2019 – 2020</p>
-      <p class="font-semibold">SP Qosimov Group</p>
-      <p class="text-sm opacity-80">Bugalter</p>
-     </div>
-     <div class="timeline-item">
-      <p class="font-bold text-sm" style="color:#dc2626;">2022</p>
-      <p class="font-semibold">Chinoz tumani, Yallama qishlog'i Ochamayli MFY</p>
-      <p class="text-sm opacity-80">Inspektor</p>
-     </div>
-     <div class="timeline-item">
-      <p class="font-bold text-sm" style="color:#dc2626;">2022 – hozirgi</p>
-      <p class="font-semibold">I.Karimov nomidagi TDTU Olmaliq filiali, Akademik litsey</p>
-      <p class="text-sm opacity-80">Laborant (2022), Kotiba (2023-sentyabrdan)</p>
-     </div>
-    </div>
-   </div>
-  </section><!-- FAMILY -->
-  <section id="family" class="liquid-section w-full px-6 pb-12">
-   <div class="max-w-5xl mx-auto liquid-card rounded-2xl p-8 section-anim overflow-x-auto">
-    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2" style="font-family:'Playfair Display',serif; color:#991b1b;"><i data-lucide="heart" style="width:22px;height:22px;color:#dc2626;"></i> Yaqin Qarindoshlar</h2>
-    <table class="family-table w-full min-w-[700px]">
-     <thead>
-      <tr>
-       <th>Qarindoshlik</th>
-       <th>F.I.O</th>
-       <th>Tug'ilgan</th>
-       <th>Ish joyi</th>
-       <th>Turar joyi</th>
-      </tr>
-     </thead>
-     <tbody>
-      <tr>
-       <td class="font-semibold">Otasi</td>
-       <td>Mirvaliyev Bohodir Mahamadovich</td>
-       <td>1963, Yangiyol</td>
-       <td>9256 Vayenichas Gulbahor chegara qo'riqchilar (haydovchi)</td>
-       <td>Yangiyol, Iqbol ko'chasi 8-uy</td>
-      </tr>
-      <tr>
-       <td class="font-semibold">Onasi</td>
-       <td>Mirvaliyeva Movluda Abdukadirovna</td>
-       <td>1968, Yangiyol</td>
-       <td>Nafaqaxo'r</td>
-       <td>Yangiyol, Iqbol ko'chasi 8-uy</td>
-      </tr>
-      <tr>
-       <td class="font-semibold">Akasi</td>
-       <td>Mirvaliyev Fahriddin Bohodirovich</td>
-       <td>1987, Yangiyol</td>
-       <td>Milliy gvardiya Qo'riqlash Bosh Boshqarmasi</td>
-       <td>Yangiyol, Iqbol ko'chasi 8-uy</td>
-      </tr>
-      <tr>
-       <td class="font-semibold">Ukasi</td>
-       <td>Mirvaliyev Farxod Bohodirovich</td>
-       <td>1991, Yangiyol</td>
-       <td>Tadbirkor, Yangiyol</td>
-       <td>Yangiyol, Iqbol ko'chasi 8-uy</td>
-      </tr>
-      <tr>
-       <td class="font-semibold">Turmush o'rtog'i</td>
-       <td>Sayfullayev Sherali Sultonovich</td>
-       <td>1985, Chinoz</td>
-       <td>Yuqori Chirchiq, "Yevday shoh" MCHJ, Yer nazoratchi</td>
-       <td>Parkent, Krasnagorskiy, Paletayeva 45-52</td>
-      </tr>
-      <tr>
-       <td class="font-semibold">O'g'li</td>
-       <td>Sultonov Sardorbek Sherali o'g'li</td>
-       <td>2010, Yangiyol</td>
-       <td>56-maktab o'quvchisi, Krasnagorsk</td>
-       <td>Parkent, Krasnagorskiy, Paletayeva 45-52</td>
-      </tr>
-      <tr>
-       <td class="font-semibold">Qizi</td>
-       <td>Sultonova Zilola Sherali qizi</td>
-       <td>2014, Chinoz</td>
-       <td>56-maktab o'quvchisi, Krasnagorsk</td>
-       <td>Parkent, Krasnagorskiy, Paletayeva 45-52</td>
-      </tr>
-      <tr>
-       <td class="font-semibold">Qaynotasi</td>
-       <td>Sayfullayev Sulton Fayzulayevich</td>
-       <td>1959, Chinoz</td>
-       <td>Tadbirkor (nafaqaxo'r)</td>
-       <td>Chinoz, Yallama, Tibbiot ko'chasi 12-uy</td>
-      </tr>
-      <tr>
-       <td class="font-semibold">Qaynonasi</td>
-       <td>Sayfullayeva To'ydinisa Ergashevna</td>
-       <td>1962, Chinoz</td>
-       <td>Uy bekasi (nafaqaxo'r)</td>
-       <td>Chinoz, Yallama, Tibbiot ko'chasi 12-uy</td>
-      </tr>
-     </tbody>
-    </table>
-   </div>
-  </section><!-- CONTACT -->
-  <section id="contact" class="liquid-section w-full px-6 pb-20">
-   <div class="max-w-md mx-auto text-center section-anim">
-    <h2 class="text-2xl font-bold mb-4 flex items-center justify-center gap-2" style="font-family:'Playfair Display',serif; color:#991b1b;"><i data-lucide="phone" style="width:22px;height:22px;color:#dc2626;"></i> Aloqa</h2>
-    <p class="text-sm mb-6 opacity-70">Murojaat uchun quyidagi raqamga bog'laning</p><a href="tel:+998947042489" class="inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-bold text-lg phone-pulse" style="background: linear-gradient(135deg, #dc2626, #991b1b); text-decoration:none;"> <i data-lucide="phone-call" style="width:22px;height:22px;"></i> <span id="el-phone">+998 94 704 24 89</span> </a>
-   </div>
-  </section><!-- Footer -->
-  <footer class="liquid-section w-full text-center py-6 px-4 text-xs opacity-50">
-   © 2024 Sayfullaeva Nargiza Bohodirovna
-  </footer>
-  <script>
-// Element SDK
-const defaultConfig = {
-  background_color: '#ffffff',
-  surface_color: 'rgba(255,255,255,0.85)',
-  text_color: '#3b1111',
-  primary_action_color: '#dc2626',
-  secondary_action_color: '#991b1b',
-  font_family: 'Source Sans 3',
-  font_size: 16,
-  full_name: 'Sayfullaeva Nargiza Bohodirovna',
-  job_title: 'Moliya mutaxassisi · Kotiba',
-  phone_number: '+998 94 704 24 89'
-};
+</head>
+<body>
 
-function applyConfig(config) {
-  const c = { ...defaultConfig, ...config };
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-  // Colors
-  document.body.style.color = c.text_color;
-  document.querySelectorAll('.liquid-card').forEach(el => {
-    el.style.background = c.surface_color;
+<!-- Liquid background blobs -->
+<div class="liquid-bg">
+  <svg class="blob1" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#0d9488">
+      <animate attributeName="d" dur="14s" repeatCount="indefinite"
+        values="M421,308Q394,366,338,393Q282,420,220,410Q158,400,107,356Q56,312,44,248Q32,184,76,131Q120,78,182,58Q244,38,305,64Q366,90,410,145Q454,200,421,258Q388,316,421,308Z;
+                M406,300Q380,360,320,400Q260,440,195,418Q130,396,90,345Q50,294,52,233Q54,172,95,123Q136,74,198,52Q260,30,320,58Q380,86,410,143Q440,200,406,250Q372,300,406,300Z;
+                M421,308Q394,366,338,393Q282,420,220,410Q158,400,107,356Q56,312,44,248Q32,184,76,131Q120,78,182,58Q244,38,305,64Q366,90,410,145Q454,200,421,258Q388,316,421,308Z"
+      />
+    </path>
+  </svg>
+  <svg class="blob2" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#0f4c75">
+      <animate attributeName="d" dur="18s" repeatCount="indefinite"
+        values="M437,296Q400,342,355,380Q310,418,254,422Q198,426,148,396Q98,366,70,314Q42,262,52,204Q62,146,106,108Q150,70,210,56Q270,42,330,64Q390,86,428,138Q466,190,437,243Q408,296,437,296Z;
+                M420,290Q385,340,335,375Q285,410,228,415Q171,420,128,385Q85,350,64,298Q43,246,56,192Q69,138,112,100Q155,62,216,50Q277,38,332,62Q387,86,420,138Q453,190,420,240Q387,290,420,290Z;
+                M437,296Q400,342,355,380Q310,418,254,422Q198,426,148,396Q98,366,70,314Q42,262,52,204Q62,146,106,108Q150,70,210,56Q270,42,330,64Q390,86,428,138Q466,190,437,243Q408,296,437,296Z"
+      />
+    </path>
+  </svg>
+  <svg class="blob3" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#5eead4">
+      <animate attributeName="d" dur="22s" repeatCount="indefinite"
+        values="M320,240Q280,300,220,320Q160,340,110,300Q60,260,60,200Q60,140,110,100Q160,60,220,70Q280,80,320,130Q360,180,320,240Z;
+                M310,230Q270,290,210,315Q150,340,100,300Q50,260,55,198Q60,136,108,96Q156,56,216,64Q276,72,316,122Q356,172,310,230Z;
+                M320,240Q280,300,220,320Q160,340,110,300Q60,260,60,200Q60,140,110,100Q160,60,220,70Q280,80,320,130Q360,180,320,240Z"
+      />
+    </path>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">N.S.</a>
+  <ul class="nav-links">
+    <li><a href="#about">Haqida</a></li>
+    <li><a href="#experience">Tajriba</a></li>
+    <li><a href="#skills">Ko'nikmalar</a></li>
+    <li><a href="#contact">Aloqa</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-subtitle">Moliya · Boshqaruv · Xizmat</p>
+  <h1 class="hero-name">
+    Sayfullayeva
+    <span>Nargiza</span>
+  </h1>
+  <p class="hero-tagline">Moliya sohasida 10+ yillik tajribaga ega mutaxassis. Agrobank mahalla agenti va boshqaruv sohasidagi professional.</p>
+  <a href="#about" class="hero-cta">Tanishib chiqing</a>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>PASTGA</span>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="section-wave">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="rgba(13,148,136,0.07)"/>
+    <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="rgba(13,148,136,0.07)" transform="translate(720,0)"/>
+  </svg>
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,50 C400,10 1040,70 1440,30 L1440,80 L0,80 Z" fill="rgba(15,76,117,0.05)"/>
+    <path d="M0,50 C400,10 1040,70 1440,30 L1440,80 L0,80 Z" fill="rgba(15,76,117,0.05)" transform="translate(720,0)"/>
+  </svg>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">01 — Shaxsiy ma'lumot</p>
+  <h2 class="section-title">Men haqimda</h2>
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>🧬 Asosiy ma'lumotlar</h3>
+      <div class="info-row"><span class="info-label">Tug'ilgan:</span><span class="info-val">24 aprel 1989-yil</span></div>
+      <div class="info-row"><span class="info-label">Joyi:</span><span class="info-val">Toshkent viloyati, Yangiyo'l tumani</span></div>
+      <div class="info-row"><span class="info-label">Millati:</span><span class="info-val">O'zbek</span></div>
+      <div class="info-row"><span class="info-label">Tillar:</span><span class="info-val">O'zbek, Rus</span></div>
+      <div class="info-row"><span class="info-label">Yashash:</span><span class="info-val">Chinoz tumani, Yallama MFY</span></div>
+    </div>
+    <div class="about-card">
+      <h3>🎓 Ta'lim</h3>
+      <div class="info-row"><span class="info-label">Daraja:</span><span class="info-val">O'rta maxsus</span></div>
+      <div class="info-row"><span class="info-label">Muassasa:</span><span class="info-val">Yangiyo'l Xizmat ko'rsatish kolleji</span></div>
+      <div class="info-row"><span class="info-label">Tamomladi:</span><span class="info-val">2008-yil</span></div>
+      <div class="info-row"><span class="info-label">Mutaxassis:</span><span class="info-val">Moliya</span></div>
+    </div>
+    <div class="about-card">
+      <h3>🏛️ Joriy lavozim</h3>
+      <p style="color:rgba(255,255,255,0.7); line-height:1.8;">
+        <strong style="color:var(--teal-light);">Agrobank</strong> aksiyadorlik tijorat bankining Toshkent viloyati boshqarmasi — Chinoz filiali<br><br>
+        <em>"Yallama" mahalla fuqarolar yig'ini</em><br>
+        <strong>Mahalla agenti</strong> (shartnoma asosida)
+      </p>
+    </div>
+    <div class="about-card">
+      <h3>🌊 Shaxsiy fazilatlar</h3>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:10px;">
+        <li>✦ Mas'uliyatli va puxta ishlash uslubi</li>
+        <li>✦ Jamoa bilan samarali hamkorlik</li>
+        <li>✦ Moliyaviy hujjatlar bilan ishlash tajribasi</li>
+        <li>✦ Aholi bilan bevosita muloqot ko'nikmasi</li>
+        <li>✦ Tezkor qarorlar qabul qilish qobiliyati</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">02 — Mehnat faoliyati</p>
+  <h2 class="section-title">Ish tajribasi</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2026-yil — hozir</div>
+      <div class="tl-title">Mahalla agenti · Agrobank, Chinoz filiali</div>
+      <div class="tl-desc">"Yallama" mahalla fuqarolar yig'ini bilan shartnoma asosida hamkorlik. Bank xizmatlari va moliyaviy mahsulotlarni aholi orasida targ'ib qilish.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2023-yil</div>
+      <div class="tl-title">Kotiba · TDTU Olmaliq filiali Akademik litsey</div>
+      <div class="tl-desc">I.Karimov nomidagi TDTU Olmaliq filiali huzuridagi Akademik litseyda kotiba lavozimida faoliyat.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">01.2022-yil</div>
+      <div class="tl-title">Laborant · TDTU Olmaliq filiali Akademik litsey</div>
+      <div class="tl-desc">Laboratoriya ishlarida yordam va ilmiy ta'lim jarayoniga ko'maklashish.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">03.2022-yil</div>
+      <div class="tl-title">Inspektor · Ochamayli MFY, Chinoz tumani</div>
+      <div class="tl-desc">Yallama qishlog'i Ochamayli mahalla fuqarolar yig'inida inspektor sifatida aholi xizmatida.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">02.2019 — 12.2020</div>
+      <div class="tl-title">Buxgalter · Qosimov Group, Yangiyo'l tumani</div>
+      <div class="tl-desc">Moliyaviy hujjatlar bilan ishlash, hisobotlar tayyorlash va moliyaviy operatsiyalarni kuzatish.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">06.2013 — 12.2014</div>
+      <div class="tl-title">Mudira o'rinbosari · Yuqori Chirchiq tumani, 6-MTM</div>
+      <div class="tl-desc">Maktabgacha ta'lim muassasasida xo'jalik ishlari bo'yicha mudira o'rinbosari sifatida ishlash. Muassasa resurslarini boshqarish va xo'jalik faoliyatini tashkil etish.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">03 — Ko'nikmalar</p>
+  <h2 class="section-title">Kasbiy ko'nikmalar</h2>
+  <div class="skills-grid">
+    <div class="skill-pill">💰 Moliyaviy hisob</div>
+    <div class="skill-pill">📄 Hujjatlar yuritish</div>
+    <div class="skill-pill">🏦 Bank xizmatlari</div>
+    <div class="skill-pill">👥 Aholi bilan ishlash</div>
+    <div class="skill-pill">📊 Moliyaviy hisobot</div>
+    <div class="skill-pill">🏛️ Davlat boshqaruvi</div>
+    <div class="skill-pill">🤝 Hamkorlik</div>
+    <div class="skill-pill">📋 Ishlarni tashkil etish</div>
+    <div class="skill-pill">🗣️ O'zbek tili</div>
+    <div class="skill-pill">📝 Rus tili</div>
+    <div class="skill-pill">🔍 Nazorat va tekshirish</div>
+    <div class="skill-pill">⚡ Tezkor qarorlar</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">04 — Aloqa</p>
+  <h2 class="section-title" style="text-align:center;">Bog'lanish</h2>
+  <div style="display:flex; justify-content:center;">
+    <div class="contact-liquid">
+      <div class="contact-row">
+        <div class="contact-icon">📍</div>
+        <span>Toshkent viloyati, Chinoz tumani, Yallama MFY, Tibiyotchilar ko'chasi, 12-uy</span>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">📞</div>
+        <a href="tel:+998947042489">+998 94 704 24 89</a>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">🏦</div>
+        <span>Agrobank — Chinoz filiali, Mahalla agenti</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 · Sayfullayeva Nargiza Bohodirovna · Barcha huquqlar himoyalangan</p>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let cx = 0, cy = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    cx = e.clientX; cy = e.clientY;
+    cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
   });
-  document.querySelectorAll('.blob-1, .blob-3').forEach(el => el.style.background = c.primary_action_color);
+  function animateRing() {
+    rx += (cx - rx) * 0.12;
+    ry += (cy - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
 
-  // Fonts
-  const fontStack = `${c.font_family}, 'Source Sans 3', sans-serif`;
-  document.body.style.fontFamily = fontStack;
-  document.querySelectorAll('[style*="Playfair"]').forEach(el => {
-    el.style.fontFamily = `'Playfair Display', ${fontStack}`;
+  // Ripple on click
+  document.addEventListener('click', e => {
+    const r = document.createElement('div');
+    r.className = 'ripple';
+    r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px';
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 900);
   });
 
-  // Font size
-  const bs = c.font_size;
-  const nameEl = document.getElementById('el-name');
-  const titleEl = document.getElementById('el-title');
-  const phoneEl = document.getElementById('el-phone');
-  if (nameEl) { nameEl.textContent = c.full_name; nameEl.style.fontSize = `${bs * 2.8}px`; }
-  if (titleEl) { titleEl.textContent = c.job_title; titleEl.style.fontSize = `${bs * 1.2}px`; }
-  if (phoneEl) { phoneEl.textContent = c.phone_number; }
-}
+  // Cursor scale on hover
+  document.querySelectorAll('a, button, .skill-pill, .about-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '40px'; cursor.style.height = '40px'; cursor.style.opacity = '0.5';
+      ring.style.width = '80px'; ring.style.height = '80px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '20px'; cursor.style.height = '20px'; cursor.style.opacity = '1';
+      ring.style.width = '50px'; ring.style.height = '50px';
+    });
+  });
 
-if (window.elementSdk) {
-  window.elementSdk.init({
-    defaultConfig,
-    onConfigChange: async (config) => applyConfig(config),
-    mapToCapabilities: (config) => ({
-      recolorables: [
-        { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
-        { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
-        { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
-        { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
-        { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
-      ],
-      borderables: [],
-      fontEditable: {
-        get: () => config.font_family || defaultConfig.font_family,
-        set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
-      },
-      fontSizeable: {
-        get: () => config.font_size || defaultConfig.font_size,
-        set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+  // Timeline reveal on scroll
+  const tlItems = document.querySelectorAll('.tl-item');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 120);
       }
-    }),
-    mapToEditPanelValues: (config) => new Map([
-      ['full_name', config.full_name || defaultConfig.full_name],
-      ['job_title', config.job_title || defaultConfig.job_title],
-      ['phone_number', config.phone_number || defaultConfig.phone_number]
-    ])
-  });
-}
-
-lucide.createIcons();
+    });
+  }, { threshold: 0.15 });
+  tlItems.forEach(el => observer.observe(el));
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9eeceba320870282',t:'MTc3NjYxMjMxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
